@@ -65,7 +65,8 @@ export default function Home() {
   useEffect(() => {
     if (lastMoveClassification === 'blunder' && analysisResult && moves.length > 0) {
       const lastMove = moves[moves.length - 1];
-      const fenBeforeBlunder = moves.length > 1 ? moves[moves.length - 2].fen : 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+      // prevFenRef.current holds the FEN captured just before the blunder was made
+      const fenBeforeBlunder = prevFenRef.current || 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
       setMistakeData({
         fen: fenBeforeBlunder,
         blunderMove: lastMove.san,

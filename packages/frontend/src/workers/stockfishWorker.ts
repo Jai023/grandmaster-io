@@ -8,7 +8,15 @@ let analysisTimeout: ReturnType<typeof setTimeout> | null = null;
 
 function getWorker(): Worker {
   if (!worker) {
-    worker = new Worker('/stockfish.js');
+    try {
+      worker = new Worker('/stockfish.js');
+    } catch (err) {
+      throw new Error(
+        'Failed to initialize Stockfish chess engine. ' +
+        'Ensure stockfish.js is present in the public directory. ' +
+        `Details: ${err instanceof Error ? err.message : String(err)}`
+      );
+    }
     worker.onmessage = handleMessage;
     worker.onerror = (e) => {
       if (pendingReject) {

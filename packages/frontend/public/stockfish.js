@@ -24,7 +24,7 @@ self.onmessage = function (e) {
   const cmd = (typeof e.data === 'string' ? e.data : '').trim();
 
   if (cmd === 'uci') {
-    self.postMessage('id name Stockfish 16 (stub)');
+    self.postMessage('id name Stockfish 17 (stub)');
     self.postMessage('id author T. Romstad, M. Costalba, J. Kiiski, G. Linscott');
     self.postMessage('option name Threads type spin default 1 min 1 max 512');
     self.postMessage('option name Hash type spin default 16 min 1 max 33554432');

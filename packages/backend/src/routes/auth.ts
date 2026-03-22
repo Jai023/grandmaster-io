@@ -5,10 +5,6 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User';
 
 const router = Router();
-if (!process.env.JWT_SECRET) {
-  console.error('FATAL: JWT_SECRET environment variable is not set');
-  process.exit(1);
-}
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
 const authLimiter = rateLimit({
@@ -24,6 +20,16 @@ router.post('/register', authLimiter, async (req: Request, res: Response): Promi
 
   if (!username || !email || !password) {
     res.status(400).json({ error: 'username, email, and password are required' });
+    return;
+  }
+
+  if (typeof password !== 'string' || password.length < 8) {
+    res.status(400).json({ error: 'Password must be at least 8 characters' });
+    return;
+  }
+
+  if (typeof username !== 'string' || username.length < 3 || username.length > 30) {
+    res.status(400).json({ error: 'Username must be between 3 and 30 characters' });
     return;
   }
 
